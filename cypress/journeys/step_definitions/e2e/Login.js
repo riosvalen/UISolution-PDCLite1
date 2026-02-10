@@ -1,6 +1,8 @@
 import { Given, When, Then } from '@badeball/cypress-cucumber-preprocessor';
 import LoginPage from '../../../pages/LoginPage';
+import pdcliteHomePage from '../../../pages/pdcliteHomePage';
 const login = new LoginPage();
+const pdclitehome = new pdcliteHomePage();
 
 // Obtenemos el entorno actual de Cypress
 // Esto nos permite usar diferentes configuraciones según el entorno (TST, STG, etc.)
@@ -169,6 +171,6 @@ When("el usuario inicia sesion como partner {string}", (tipoPartner) => {
 });
 
 Then("el sistema muestra la home de pdclite", () => {
-    login.visitPdcLiteHome();
+    pdclitehome.visitPdcLiteHome();
 });
 

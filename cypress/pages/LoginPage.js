@@ -37,8 +37,6 @@ class LoginPage {
     signUpModal: () => cy.contains('p', 'Ingresá tus datos para crear una cuenta'),
     failedPassMesagge: () => cy.get('#password-helper-text'),
     ingressPanelBtn: () => cy.get('button.MuiButton-containedSizeMedium'),
-    pdcLiteHomeUrl: () => cy.url({ timeout: 120000 }).should('include', 'https://pdclite.aatest.host/sire/44498/listado'),
-    pdcLiteHome: () => cy.contains('h6', 'Gestor de reservas'),
   };
 
   clickLogin() {
@@ -146,10 +144,7 @@ class LoginPage {
       .click({ force: true });
   };
 
-  visitPdcLiteHome() {
-    cy.url({ timeout: 120000 }).should('include', 'https://pdclite.aatest.host/sire/44498/listado');
-    this.elements.pdcLiteHome().should("be.visible");
-  }
+
 
 }
 
