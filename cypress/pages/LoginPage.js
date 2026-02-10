@@ -36,7 +36,11 @@ class LoginPage {
     myReservationButton: () => cy.contains('span', 'Mis reservas'),
     signUpModal: () => cy.contains('p', 'Ingresá tus datos para crear una cuenta'),
     failedPassMesagge: () => cy.get('#password-helper-text'),
-    ingressPanelBtn: () => cy.get('button.MuiButton-containedSizeMedium'),
+    ingressPanelBtn: () =>
+      responsiveGet({
+        desktop: () => cy.get(':nth-child(2) > .MuiButtonBase-root > .MuiListItemText-root > .MuiTypography-root'),
+        mobile: () => cy.get('.MuiList-padding > :nth-child(2) > .MuiButtonBase-root > .MuiListItemText-root > .MuiTypography-root'),
+      }),
   };
 
   clickLogin() {
@@ -138,8 +142,7 @@ class LoginPage {
   };
 
   clikIngressPanel() {
-    cy.contains('button', /Ingresar al panel/i, { timeout: 30000 })
-      .should("be.visible")
+    this.elements.ingressPanelBtn().should("be.visible", { timeout: 30000 })
       .scrollIntoView()
       .click({ force: true });
   };
