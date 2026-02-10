@@ -1,0 +1,79 @@
+{
+  "name": "cypress-automation-framework",
+  "version": "1.0.0",
+  "description": "Cypress Automation project with cucumber and API testing support.",
+  "main": "index.js",
+  "scripts": {
+    "cypress:open:dev": "cypress open --e2e --browser chrome -e ENV=DEV",
+    "cypress:open:tst:chrome": "cypress open --e2e --browser chrome -e ENV=TST",
+    "cypress:open:tst:edge": "cypress open --e2e --browser edge -e ENV=TST",
+    "cypress:open:tst:firefox": "cypress open --e2e --browser firefox -e ENV=TST",
+    "cypress:open:prod:desktop": "cypress open --e2e --browser chrome -e ENV=PROD,RUN_TAG=@desktop",
+    "cypress:open:prod:mobile": "cypress open --e2e --browser chrome -e ENV=PROD,RUN_TAG=@mobile",
+    "cypress:runner:api:tst": "cypress run --spec cypress/journeys/features/api/**/*.feature --browser chrome -e ENV=TST",
+    "cypress:runner:e2e:tst": "cypress run --spec cypress/journeys/features/e2e/**/*.feature --browser chrome -e ENV=TST",
+    "cypress:open:stg:desktop": "cypress open --e2e --browser chrome -e ENV=TST,RUN_TAG=@desktop",
+    "cypress:open:stg:mobile": "cypress open --e2e --browser chrome -e ENV=TST,RUN_TAG=@mobile",
+    "cypress:run:stg:desktop": "cypress run --e2e --browser chrome -e ENV=STG,RUN_TAG=@desktop",
+    "cypress:run:stg:mobile": "cypress run --e2e --browser chrome -e ENV=STG,RUN_TAG=@mobile",
+    "cypress:run:desktop:tst": "cypress run --e2e --browser chrome -e ENV=TST,RUN_TAG=@desktop,allure=true,allureResultsPath=allure-results/desktop",
+    "cypress:run:desktop:prod": "cypress run --e2e --browser chrome -e ENV=PROD,RUN_TAG=@desktop,allure=true,allureResultsPath=allure-results/desktop",
+    "cypress:run:mobile:tst": "cypress run --e2e --browser chrome -e ENV=TST,RUN_TAG=@mobile,allure=true,allureResultsPath=allure-results/mobile",
+    "cypress:run:mobile:prod": "cypress run --e2e --browser chrome -e ENV=PROD,RUN_TAG=@mobile,allure=true,allureResultsPath=allure-results/mobile",
+    "cypress:run:all:tst": "npm-run-all --continue-on-error cypress:run:desktop:tst cypress:run:mobile:tst",
+    "cypress:run:all:prod": "npm-run-all --continue-on-error cypress:run:desktop:prod cypress:run:mobile:prod",
+    "limpiar-reporte": "rimraf ./allure-report && rimraf ./allure-results",
+    "ejecutar-pruebas": "cypress run --headed --env ENV=TST,allure=true,allureResultsPath=allure-results",
+    "generar-reporte": "npx allure generate allure-results/desktop allure-results/mobile allure-results -o allure-report --clean",
+    "abrir-reporte": "npx allure open allure-report",
+    "enviar-reporte": "node scripts/enviar-reporte.js",
+    "test": "npm run limpiar-reporte && npm-run-all --continue-on-error ejecutar-pruebas generar-reporte abrir-reporte",
+    "test:full:tst": "npm run limpiar-reporte && npm-run-all --continue-on-error cypress:run:desktop:tst cypress:run:mobile:tst generar-reporte enviar-reporte",
+    "test:full:prod": "npm run limpiar-reporte && npm-run-all --continue-on-error cypress:run:desktop:prod cypress:run:mobile:prod generar-reporte enviar-reporte"
+  },
+  "keywords": [
+    "Cypress",
+    "Gherkin",
+    "Cucumber",
+    "API",
+    "E2E",
+    "Testing",
+    "Automation"
+  ],
+  "author": "Alquiler Argentina",
+  "license": "ISC",
+  "devDependencies": {
+    "@badeball/cypress-cucumber-preprocessor": "^23.2.1",
+    "@bahmutov/cypress-esbuild-preprocessor": "^2.2.7",
+    "@cucumber/cucumber": "^12.2.0",
+    "@cucumber/gherkin": "^37.0.1",
+    "@cucumber/messages": "^31.1.0",
+    "@cypress/browserify-preprocessor": "^3.0.2",
+    "@faker-js/faker": "^9.6.0",
+    "@shelex/cypress-allure-plugin": "^2.41.2",
+    "allure-commandline": "^2.32.0",
+    "archiver": "^7.0.1",
+    "cypress": "^14.5.4",
+    "cypress-automation-framework": "file:",
+    "cypress-on-fix": "^1.0.3",
+    "cypress-plugin-api": "^2.11.1",
+    "esbuild": "latest",
+    "eslint": "^9.22.0",
+    "eslint-plugin-cypress": "^4.2.0",
+    "multiple-cucumber-html-reporter": "^3.6.0",
+    "nodemailer": "^8.0.0",
+    "npm-run-all": "^4.1.5",
+    "rimraf": "^6.0.1"
+  },
+  "optionalDependencies": {
+    "@esbuild/linux-x64": "0.25.11"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kiuviqa/base-framework-cypress.git"
+  },
+  "bugs": {
+    "url": "https://github.com/kiuviqa/base-framework-cypress/issues"
+  },
+  "homepage": "https://github.com/kiuviqa/base-framework-cypress#readme"
+}
