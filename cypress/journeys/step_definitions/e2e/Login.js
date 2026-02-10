@@ -119,10 +119,6 @@ When("el usuario hace click en ingresar al panel", () => {
     cy.log("hizo click y termino el step")
 });
 
-Then("el sistema muestra la home de pdclite", () => {
-    cy.log("Hola mundo")
-    login.visitPdcLiteHome()
-});
 
 When("el usuario hace click en el menu", () => {
     login.clickMenuApollo();
@@ -151,10 +147,28 @@ Given("el turista esta logueado", () => {
     login.compareApolloHome();
 })
 
+When("el usuario inicia sesion como partner {string}", (tipoPartner) => {
+    login.clickLogin();
+    login.compareLoginModal();
 
+    let usuario, password;
+    if (tipoPartner === "SIRO") {
+        usuario = Cypress.env(envi).siroUsername;
+        password = Cypress.env(envi).siroPassword;
+    } else {
+        usuario = Cypress.env(envi).sicUsername;
+        password = Cypress.env(envi).sicPassword;
+    }
 
+    login.sendUsername(usuario);
+    login.clickNextStep();
+    login.sendPassword(password);
+    login.clickNextStep();
+    login.compareWelcomeModal();
+    login.clickContinueToSitePartner();
+});
 
-
-
-
+Then("el sistema muestra la home de pdclite", () => {
+    login.visitPdcLiteHome();
+});
 

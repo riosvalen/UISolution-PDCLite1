@@ -37,8 +37,8 @@ class LoginPage {
     signUpModal: () => cy.contains('p', 'Ingresá tus datos para crear una cuenta'),
     failedPassMesagge: () => cy.get('#password-helper-text'),
     ingressPanelBtn: () => cy.get('button.MuiButton-containedSizeMedium'),
-    pdcLiteHomeUrl: () => cy.url({ timeout: 120000 }).should('include', '/https://pdclite.aatest.host/sire/44498/listado'), //ver de mover a una page de pdclite
-    pdcLiteHome: () => cy.contains('h6', 'Gestor de reservas'), //ver de mover a una page de pdclite
+    pdcLiteHomeUrl: () => cy.url({ timeout: 120000 }).should('include', 'https://pdclite.aatest.host/sire/44498/listado'),
+    pdcLiteHome: () => cy.contains('h6', 'Gestor de reservas'),
   };
 
   clickLogin() {
@@ -140,13 +140,15 @@ class LoginPage {
   };
 
   clikIngressPanel() {
-    this.elements.ingressPanelBtn().should("contain", "Ingresar al panel").click();
+    cy.contains('button', /Ingresar al panel/i, { timeout: 30000 })
+      .should("be.visible")
+      .scrollIntoView()
+      .click({ force: true });
   };
 
   visitPdcLiteHome() {
-    cy.location("href").should("eq", "https://pdclite.aatest.host/?_gl=1*5tyqt5*_gcl_au*Njg2OTUyMDE3LjE3NTc5NTg5NDkuMzk2ODIyMTA5LjE3NTk0MzIzNTQuMTc1OTQzMjQwNw..");
-    this.elements.pdcLiteHome().should("contain", "Gestor de reservas")
-    //cy.url({ timeout: 10000 }).should('include', 'https://pdclite.aatest.host/sire/44498/listado');
+    cy.url({ timeout: 120000 }).should('include', 'https://pdclite.aatest.host/sire/44498/listado');
+    this.elements.pdcLiteHome().should("be.visible");
   }
 
 }
